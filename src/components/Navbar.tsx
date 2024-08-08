@@ -36,16 +36,7 @@ const Links: Links = [
 
 export default function Navbar() {
   const currentPath = usePathname();
-  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [showHamburgerMenu, setShowHamburgerMenu] = useState<boolean>(false);
-
-  const onResize = () => {
-    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
-      setIsMobile(false);
-    } else {
-      setIsMobile(true);
-    }
-  };
 
   const handleShowMenu = () => {
     setShowHamburgerMenu((prevState) => {
@@ -64,16 +55,36 @@ export default function Navbar() {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, [isMobile]);
+  return (
+    <Fragment>
+        {showHamburgerMenu && <div className="w-screen h-screen absolute top-0 left-0 bg-[#eee] opacity-50"></div>}
+        <RxHamburgerMenu
+          className="w-6 h-6 hamburger min-[768px]:hidden"
+          onClick={handleShowMenu}
+        />
+        <motion.div
+          animate={showHamburgerMenu ? "open" : "closed"}
+          variants={variants}
+          className="hamburger-area hidden flex-col items-end h-screen absolute right-0 bg-[#ff642d] w-40 p-2 top-0 max-[767px]:flex"
+        >
+          <IoCloseCircleOutline
+            className="w-6 h-6 close"
+            onClick={handleShowMenu}
+          />
 
-  if (!isMobile) {
-    return (
-      <nav>
+          <nav className="flex w-full mt-3 z-[999] justify-center">
+            <ul className="flex flex-col gap-2">
+              {Links.map((item, index) => {
+                return (
+                  <li key={index}>
+                    <Link href={item.url} className="text-white">{item.title}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </motion.div>
+        <nav className="max-[767px]:hidden">
         <ul className="flex gap-7">
           {Links.map((item, index) => {
             if (item.url === currentPath) {
@@ -99,38 +110,6 @@ export default function Navbar() {
           })}
         </ul>
       </nav>
-    );
-  }
-
-  return (
-    <Fragment>
-        {showHamburgerMenu && <div className="w-screen h-screen absolute top-0 left-0 bg-[#eee] opacity-50"></div>}
-        <RxHamburgerMenu
-          className="w-6 h-6 hamburger"
-          onClick={handleShowMenu}
-        />
-        <motion.div
-          animate={showHamburgerMenu ? "open" : "closed"}
-          variants={variants}
-          className="hamburger-area flex flex-col items-end h-screen absolute right-0 bg-[#ff642d] w-40 p-2 top-0"
-        >
-          <IoCloseCircleOutline
-            className="w-6 h-6 close"
-            onClick={handleShowMenu}
-          />
-
-          <nav className="flex w-full mt-3 z-[999] justify-center">
-            <ul className="flex flex-col gap-2">
-              {Links.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <Link href={item.url} className="text-white">{item.title}</Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </motion.div>
     </Fragment>
   );
 }
