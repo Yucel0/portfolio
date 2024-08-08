@@ -35,9 +35,8 @@ const Links: Links = [
 
 
 export default function Navbar() {
-  const initialState = typeof window !== 'undefined' ? (window.innerWidth >= 768 ? false : true) : false;
   const currentPath = usePathname();
-  const [isMobile, setIsMobile] = useState<boolean>(initialState);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [showHamburgerMenu, setShowHamburgerMenu] = useState<boolean>(false);
 
   const onResize = () => {
