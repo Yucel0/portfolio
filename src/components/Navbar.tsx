@@ -33,9 +33,9 @@ const Links: Links = [
   },
 ];
 
-const initialState = window ? (window.innerWidth >= 768 ? false : true) : false;
 
 export default function Navbar() {
+  const initialState = window ? (window.innerWidth >= 768 ? false : true) : false;
   const currentPath = usePathname();
   const [isMobile, setIsMobile] = useState<boolean>(initialState);
   const [showHamburgerMenu, setShowHamburgerMenu] = useState<boolean>(false);
