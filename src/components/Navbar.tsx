@@ -35,13 +35,13 @@ const Links: Links = [
 
 
 export default function Navbar() {
-  const initialState = window ? (window.innerWidth >= 768 ? false : true) : false;
+  const initialState = typeof window !== 'undefined' ? (window.innerWidth >= 768 ? false : true) : false;
   const currentPath = usePathname();
   const [isMobile, setIsMobile] = useState<boolean>(initialState);
   const [showHamburgerMenu, setShowHamburgerMenu] = useState<boolean>(false);
 
   const onResize = () => {
-    if (window.innerWidth >= 768) {
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
       setIsMobile(false);
     } else {
       setIsMobile(true);
