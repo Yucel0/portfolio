@@ -13,6 +13,12 @@ export default function Contact() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    const jsonData = {
+      fullname: formData.get('fullname'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message')
+    };
     const status = isAllEmpty(formData);
     if (!status) {
         toast.error('Lütfen tüm alanları doldurunuz!');
@@ -20,9 +26,9 @@ export default function Contact() {
       try {
         const response = await fetch("https://mail-api-portfolio.onrender.com/api/send-mail", {
           method: "POST",
-          body: formData,
+          body: JSON.stringify(jsonData),
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "application/json",
           },
         });
         if (response.ok) {

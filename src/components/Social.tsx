@@ -18,17 +18,17 @@ const socialMedia: SocialMedia = [
   },
   {
     icon: <VscGithubInverted />,
-    url: "https://www.linkedin.com/in/yucel-yilmaz34/",
+    url: "https://github.com/Yucel0",
   },
   {
     icon: <FaXTwitter />,
-    url: "https://www.linkedin.com/in/yucel-yilmaz34/",
+    url: "https://x.com/yclylmzx",
   }
 ];
 
 export default function Social() {
   return (
-    <ul className="flex gap-3">
+    <ul className="flex gap-3 max-[576px]:justify-center">
       {socialMedia.map((item, index) => {
         return (
           <li key={index} className="rounded-[100px] bg-black w-10 h-10 hover:border hover:border-solid hover:border-[#ff642d] hover:bg-white transition ease-linear duration-200">
